@@ -1,16 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.6d7463fd.css",
-    "main.js": "/static/js/main.eafff604.js",
+    "main.css": "/static/css/main.902b4c96.css",
+    "main.js": "/static/js/main.378202dc.js",
     "static/js/787.d37db568.chunk.js": "/static/js/787.d37db568.chunk.js",
     "static/media/background.jpg": "/static/media/background.dc1ae0c37c959317cf7e.jpg",
+    "static/media/PolygonLogo.png": "/static/media/PolygonLogo.300ed17c919cbab2b712.png",
+    "static/media/Cosmoslogo.png": "/static/media/Cosmoslogo.e7e301fc3d492a32860b.png",
+    "static/media/Fantomlogo.png": "/static/media/Fantomlogo.fdea3500e978400d9b57.png",
+    "static/media/Solanalogo.png": "/static/media/Solanalogo.387370f3ab39af07dbb5.png",
+    "static/media/Adalogo.png": "/static/media/Adalogo.38c08358dff0814f562f.png",
+    "static/media/95WEOeJ(1).png": "/static/media/95WEOeJ(1).d4ed968d3a98571a5bb4.png",
+    "static/media/BinanceLogo.png": "/static/media/BinanceLogo.cec7fc10ee9ffa23a292.png",
+    "static/media/SandboxLogo.png": "/static/media/SandboxLogo.7c1c39be98527b240cbf.png",
+    "static/media/linkLogo.png": "/static/media/linkLogo.a36a2e78560b7adb1d33.png",
+    "static/media/Avalanchelogo.png": "/static/media/Avalanchelogo.580a0ce062c29909913e.png",
+    "static/media/BUSDlogo.png": "/static/media/BUSDlogo.4882ec7934589fb0632c.png",
     "index.html": "/index.html",
-    "main.6d7463fd.css.map": "/static/css/main.6d7463fd.css.map",
-    "main.eafff604.js.map": "/static/js/main.eafff604.js.map",
+    "main.902b4c96.css.map": "/static/css/main.902b4c96.css.map",
+    "main.378202dc.js.map": "/static/js/main.378202dc.js.map",
     "787.d37db568.chunk.js.map": "/static/js/787.d37db568.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6d7463fd.css",
-    "static/js/main.eafff604.js"
+    "static/css/main.902b4c96.css",
+    "static/js/main.378202dc.js"
   ]
 }

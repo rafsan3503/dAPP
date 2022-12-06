@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.902b4c96.css",
-    "main.js": "/static/js/main.378202dc.js",
+    "main.css": "/static/css/main.fa039a5e.css",
+    "main.js": "/static/js/main.7e031989.js",
     "static/js/787.d37db568.chunk.js": "/static/js/787.d37db568.chunk.js",
     "static/media/background.jpg": "/static/media/background.dc1ae0c37c959317cf7e.jpg",
     "static/media/PolygonLogo.png": "/static/media/PolygonLogo.300ed17c919cbab2b712.png",
@@ -16,12 +16,12 @@
     "static/media/Avalanchelogo.png": "/static/media/Avalanchelogo.580a0ce062c29909913e.png",
     "static/media/BUSDlogo.png": "/static/media/BUSDlogo.4882ec7934589fb0632c.png",
     "index.html": "/index.html",
-    "main.902b4c96.css.map": "/static/css/main.902b4c96.css.map",
-    "main.378202dc.js.map": "/static/js/main.378202dc.js.map",
+    "main.fa039a5e.css.map": "/static/css/main.fa039a5e.css.map",
+    "main.7e031989.js.map": "/static/js/main.7e031989.js.map",
     "787.d37db568.chunk.js.map": "/static/js/787.d37db568.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.902b4c96.css",
-    "static/js/main.378202dc.js"
+    "static/css/main.fa039a5e.css",
+    "static/js/main.7e031989.js"
   ]
 }

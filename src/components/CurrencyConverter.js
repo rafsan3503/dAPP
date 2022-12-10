@@ -16,6 +16,7 @@ const CurrencyConverter = () => {
   const [mboxExchangeRate, setMboxExchangeRate] = useState(0);
   const [kxaExchangeRate, setKxaExchangeRate] = useState(0);
   const [ibatExchangeRate, setIbatExchangeRate] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const convert = async () => {
     const options9 = {
@@ -62,6 +63,7 @@ const CurrencyConverter = () => {
     fetch("https://api.coinstats.app/public/v1/coins")
       .then((res) => res.json())
       .then((data) => {
+        setLoading(false);
         // bnb
         const bnb = data.coins.find((coin) => coin.name === "BNB").price;
         setBnbExchangeRate(bnb);
@@ -99,10 +101,13 @@ const CurrencyConverter = () => {
 
     convert();
   }, []);
-  console.log(bnbExchangeRate);
+
+  if (loading) {
+    return <div>loading</div>;
+  }
 
   return (
-    <Services>
+    <Services
       bnbExchangeRate={bnbExchangeRate}
       maticExchangeRate={maticExchangeRate}
       avaxExchangeRate={avaxExchangeRate}
@@ -115,7 +120,7 @@ const CurrencyConverter = () => {
       mboxExchangeRate={mboxExchangeRate}
       kxaExchangeRate={kxaExchangeRate}
       ibatExchangeRate={ibatExchangeRate}
-    </Services>
+    ></Services>
   );
 };
 

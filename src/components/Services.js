@@ -265,7 +265,7 @@ const Services = ({
   treasuryKxa().then((value) => setNewKxaBalance(value));
   treasuryIbat().then((value) => setNewIbatBalance(value));
   bearHeldByInvestors().then((value) => setNewBearHeldByInvestors(value));
-  console.log(bnbExchangeRate);
+
   const setTotal = () => {
     const total =
       bnbExchangeRate * newBnbBalance +

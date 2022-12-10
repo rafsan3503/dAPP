@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import background from "./assets/background.jpg";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CurrencyConverter from "./components/CurrencyConverter";
+
+const homeStyle = {
+  backgroundImage: `url(${background})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  opacity: "100%",
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={homeStyle} className="min-h-screen">
+      <CurrencyConverter />
+      <ToastContainer position="top-center"></ToastContainer>
     </div>
   );
 }

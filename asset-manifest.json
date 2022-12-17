@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.4ea7f097.css",
-    "main.js": "/static/js/main.5bec5701.js",
+    "main.css": "/static/css/main.684a2043.css",
+    "main.js": "/static/js/main.39013196.js",
     "static/js/787.d37db568.chunk.js": "/static/js/787.d37db568.chunk.js",
-    "static/media/BearCaveDarker1.png": "/static/media/BearCaveDarker1.f9d2075e232b7b208c7d.png",
+    "static/media/BearCaveBackground_Website.png": "/static/media/BearCaveBackground_Website.869e823ad2f2913e4bc2.png",
+    "static/media/woodgrain.png": "/static/media/woodgrain.c3e259619ff8d27f1973.png",
     "static/media/PolygonLogo.png": "/static/media/PolygonLogo.300ed17c919cbab2b712.png",
     "static/media/KryxixiaIcon.png": "/static/media/KryxixiaIcon.844d1858ba94b1e7f03e.png",
     "static/media/Cosmoslogo.png": "/static/media/Cosmoslogo.e7e301fc3d492a32860b.png",
@@ -19,12 +20,12 @@
     "static/media/Avalanchelogo.png": "/static/media/Avalanchelogo.580a0ce062c29909913e.png",
     "static/media/BUSDlogo.png": "/static/media/BUSDlogo.4882ec7934589fb0632c.png",
     "index.html": "/index.html",
-    "main.4ea7f097.css.map": "/static/css/main.4ea7f097.css.map",
-    "main.5bec5701.js.map": "/static/js/main.5bec5701.js.map",
+    "main.684a2043.css.map": "/static/css/main.684a2043.css.map",
+    "main.39013196.js.map": "/static/js/main.39013196.js.map",
     "787.d37db568.chunk.js.map": "/static/js/787.d37db568.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4ea7f097.css",
-    "static/js/main.5bec5701.js"
+    "static/css/main.684a2043.css",
+    "static/js/main.39013196.js"
   ]
 }

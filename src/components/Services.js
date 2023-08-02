@@ -29,6 +29,7 @@ import mboxLogo from "../assets/MoboxIcon.png";
 import kxaLogo from "../assets/KryxixiaIcon.png";
 import ibatLogo from "../assets/Battleinfinityicon.png";
 import logo from "../assets/95WEOeJ(1).png";
+import wood from "../assets/woodgrain.png";
 
 //create and assign treasury wallet and contract addresses
 const treasuryAddress = "0x1f1b2c8FF594E7f325594232d510234573675BbC";
@@ -43,6 +44,7 @@ const solAddress = "0x570A5D26f7765Ecb712C0924E4De545B89fD43dF";
 const sandAddress = "0x67b725d7e342d7B611fa85e859Df9697D9378B2e";
 const mboxAddress = "0x3203c9E46cA618C8C1cE5dC67e7e9D75f5da2377";
 const kxaAddress = "0x2223bF1D7c19EF7C06DAB88938EC7B85952cCd89";
+const kxaTreasuryAddress = "0xd7b3398F528975CB1b966254ad16DA5E52217e7d";
 const ibatAddress = "0x19cd9B8e42d4EF62c3EA124110D5Cfd283CEaC43";
 
 const wbnbAddress = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
@@ -60,6 +62,9 @@ const provider = new ethers.providers.JsonRpcProvider(
   "https://rpc.ankr.com/bsc"
 );
 
+const ethProvider = new ethers.providers.JsonRpcProvider(
+  "https://rpc.ankr.com/eth"
+);
 const TREASURY_ABI = [
   "function name() external view returns(string memory)",
   "function symbol() external view returns (string memory)",
@@ -85,7 +90,7 @@ const bear = new ethers.Contract(bearAddress, BEAR_ABI, provider);
 const wbnb = new ethers.Contract(wbnbAddress, TREASURY_ABI, provider);
 const sand = new ethers.Contract(sandAddress, TREASURY_ABI, provider);
 const mbox = new ethers.Contract(mboxAddress, TREASURY_ABI, provider);
-const kxa = new ethers.Contract(kxaAddress, TREASURY_ABI, provider);
+const kxa = new ethers.Contract(kxaAddress, TREASURY_ABI, ethProvider);
 const ibat = new ethers.Contract(ibatAddress, TREASURY_ABI, provider);
 
 const bearLP = async () => {
@@ -202,8 +207,9 @@ const treasuryMbox = async () => {
 
 const treasuryKxa = async () => {
   const kxaBalance = ethers.utils.formatEther(
-    await kxa.balanceOf(treasuryAddress)
+    await kxa.balanceOf(kxaTreasuryAddress)
   );
+
   return parseFloat(kxaBalance).toFixed(2);
 };
 
@@ -262,7 +268,10 @@ const Services = ({
   treasurySol().then((value) => setNewSolBalance(value));
   treasurySand().then((value) => setNewSandBalance(value));
   treasuryMbox().then((value) => setNewMboxBalance(value));
-  treasuryKxa().then((value) => setNewKxaBalance(value));
+  treasuryKxa().then((value) => {
+    console.log(value);
+    setNewKxaBalance(value);
+  });
   treasuryIbat().then((value) => setNewIbatBalance(value));
   bearHeldByInvestors().then((value) => setNewBearHeldByInvestors(value));
 
@@ -305,19 +314,29 @@ const Services = ({
     );
   };
 
+  const style = {
+    color: "#F6F6F6",
+    textShadow: "0px -10px 0px black",
+  };
+
   return (
     <div className="flex w-full justify-center text-white font-Roboto">
       <div className="flex mf:flex-row flex-col items-start justify-between pt-10 px-4">
         <div className="flex flex-1 justify-center items-start flex-col mf:mr-10">
-          {
-            <h1 className="text-7xl text-center text-white py-3  w-full ">
-              The Bear Cave
+          <div
+            style={{ backgroundImage: `url(${wood})` }}
+            className="flex flex-col p-8 shadow-lg font-diplomatic shadow-black rounded-2xl items-center mx-auto"
+          >
+            {
+              <h1 style={style} className="text-5xl text-center py-3  w-full ">
+                The Bear Cave
+              </h1>
+            }
+            <h1 className="text-4xl font-medium w-full text-center">
+              Total: ${setTotal()}
             </h1>
-          }
-          <h1 className="text-4xl font-medium w-full text-center">
-            Total: ${setTotal()}
-          </h1>
-          <div className="grid grid-cols-4 items-center lg:grid-cols-5 w-full mt-10 border-2 p-5 rounded-xl gap-4 text-white backdrop-blur-lg text-center divide-x">
+          </div>
+          <div className="grid grid-cols-4 items-center lg:grid-cols-5 w-full mt-10 border-2 p-5 rounded-xl gap-4 text-white text-sm md:text-xl backdrop-blur-xl text-center divide-x">
             <div>
               <img
                 src={maticLogo}
@@ -411,7 +430,7 @@ const Services = ({
           <h1 className="text-4xl text-center text-white mt-5 w-full">
             Gaming/Utility
           </h1>
-          <div className="grid gap-4 grid-cols-4 lg:grid-cols-5 items-center border-2 rounded-lg w-full mt-10 text-white backdrop-blur-lg p-5 text-center divide-x">
+          <div className="grid gap-4 grid-cols-4 lg:grid-cols-5 items-center border-2 rounded-lg w-full mt-10 text-white text-sm md:text-xl backdrop-blur-xl p-5 text-center divide-x">
             <div>
               {" "}
               <img
@@ -468,7 +487,7 @@ const Services = ({
           <h1 className="text-4xl text-center text-white mt-5 w-full">
             Next Month's Investment
           </h1>
-          <div className="grid grid-cols-4 lg:grid-cols-5 items-center border-2 rounded-lg w-full mt-10 text-white backdrop-blur-lg p-5 text-center divide-x">
+          <div className="grid grid-cols-4 lg:grid-cols-5 items-center border-2 rounded-lg w-full mt-10 text-white text-sm md:text-xl backdrop-blur-xl p-5 text-center divide-x">
             <div>
               <img src={bnbLogo} alt="logo" className="w-12 lg:w-16 border-2" />
             </div>
@@ -480,7 +499,7 @@ const Services = ({
           <h1 className="text-4xl text-center text-white mt-5 w-full">
             Arbitrage Calculation
           </h1>
-          <div className="grid grid-cols-4 lg:grid-cols-5 items-center border-2 rounded-lg w-full mt-10 text-white backdrop-blur-lg p-5 text-center divide-x gap-4">
+          <div className="grid grid-cols-4 lg:grid-cols-5 items-center border-2 rounded-lg w-full mt-10 text-white text-sm md:text-xl backdrop-blur-xl p-5 text-center divide-x gap-4">
             <div>
               <img src={bnbLogo} alt="logo" className="w-12 lg:w-16 border-2" />
             </div>

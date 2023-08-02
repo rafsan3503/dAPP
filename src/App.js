@@ -1,5 +1,5 @@
 import "./App.css";
-import background from "./assets/background.jpg";
+import background from "./assets/BearCaveBackground_Website.png";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CurrencyConverter from "./components/CurrencyConverter";

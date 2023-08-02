@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {},
+    fontFamily: {
+      diplomatic: ["Diplomata SC", "cursive"],
+    },
   },
-  plugins: [],
+  plugins: [require("tw-elements/dist/plugin")],
 };

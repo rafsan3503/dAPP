@@ -103,7 +103,16 @@ const CurrencyConverter = () => {
   }, []);
 
   if (loading) {
-    return <div>loading</div>;
+    return (
+      <div class="flex min-h-screen w-full justify-center items-center">
+        <div
+          class="spinner-grow inline-block w-10 h-10 bg-black rounded-full opacity-0"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   return (

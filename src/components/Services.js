@@ -5,14 +5,11 @@
 //import dependencies
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
-import { axios } from "axios";
-import { GETBLOCK_ID } from "../utils/constants";
-import { CHAIN_STACK } from "../utils/constants";
 import { ethers } from "ethers";
-import currencyConverter from "./CurrencyConverter";
 import { FcInfo } from "react-icons/fc";
 import { toast } from "react-toastify";
+import { BLOCKPRICE_API, CHAIN_STACK } from "../utils/constants";
+
 
 //import crypto logos
 import bnbLogo from "../assets/BinanceLogo.png";
@@ -30,6 +27,7 @@ import kxaLogo from "../assets/KryxixiaIcon.png";
 import ibatLogo from "../assets/Battleinfinityicon.png";
 import logo from "../assets/95WEOeJ(1).png";
 import wood from "../assets/woodgrain.png";
+import axios from "axios";
 
 //create and assign treasury wallet and contract addresses
 const treasuryAddress = "0x1f1b2c8FF594E7f325594232d510234573675BbC";
@@ -90,6 +88,7 @@ const mbox = new ethers.Contract(mboxAddress, TREASURY_ABI, provider);
 const kxa = new ethers.Contract(kxaAddress, TREASURY_ABI, ethProvider);
 const ibat = new ethers.Contract(ibatAddress, TREASURY_ABI, provider);
 
+
 const bearLP = async () => {
   const bearLPWBNB = ethers.utils.formatEther(
     await wbnb.balanceOf(bearLPAddress)
@@ -140,10 +139,19 @@ const treasuryMatic = async () => {
 };
 
 const treasuryAvax = async () => {
-  const avaxBalance = ethers.utils.formatEther(
-    await avax.balanceOf(treasuryAddress)
-  );
-  return parseFloat(avaxBalance).toFixed(2);
+  // const avaxBalance = ethers.utils.formatEther(
+  //   await avax.balanceOf(treasuryAddress)
+  // );
+  // return parseFloat(avaxBalance).toFixed(2);
+
+  console.log(BLOCKPRICE_API);
+  const url = `https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/avax/`;
+  console.log(url);
+  const response = await axios.get(`https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/avax/`);
+  const avaxPrice = response?.data;
+
+  console.log("avaxprice", avaxPrice);
+  return parseFloat(avaxPrice).toFixed(2);
 };
 
 const treasuryFtm = async () => {
@@ -266,7 +274,6 @@ const Services = ({
   treasurySand().then((value) => setNewSandBalance(value));
   treasuryMbox().then((value) => setNewMboxBalance(value));
   treasuryKxa().then((value) => {
-    console.log(value);
     setNewKxaBalance(value);
   });
   treasuryIbat().then((value) => setNewIbatBalance(value));

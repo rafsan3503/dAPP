@@ -58,13 +58,10 @@ const marketingBearAddress = "0xd7b3398F528975CB1b966254ad16DA5E52217e7d";
 const devBearAddress = "0xc414f2d604eb7B6c5C1dA41f80Ca0d7C6fA03B6a";
 
 //instantiation of the smartchain provider used to call values from bscscan
-const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/bsc"
-);
+const provider = new ethers.providers.JsonRpcProvider(`https://bsc.getblock.io/93067126-324b-4c57-9509-bc198797c055/mainnet/`);
 
-const ethProvider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/eth"
-);
+const ethProvider = new ethers.providers.JsonRpcProvider(`https://mainnet.infura.io/v3/f80ed0b0aaf84c7394ffc5279740c63c`);
+
 const TREASURY_ABI = [
   "function name() external view returns(string memory)",
   "function symbol() external view returns (string memory)",
@@ -160,7 +157,7 @@ const treasuryBusd = async () => {
   const busdBalance = ethers.utils.formatEther(
     await busd.balanceOf(treasuryAddress)
   );
-  return busdBalance;
+  return parseFloat(busdBalance).toFixed(2);
 };
 
 const treasuryLink = async () => {

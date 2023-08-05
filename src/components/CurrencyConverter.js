@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 // import { MORALIS_API } from "../utils/constants";
-import { BLOCKPRICE_API } from "../utils/constants";
 import Services from "./Services";
 
-console.log("api", process.env.BLOCKPRICE_API);
 const MORALIS_API = "KaPWKgqJbgSsBpLN0YIc2qyz8LjfhSc2LrizqP9wDWzFgoZUMoqhpXgB0mBS9Ox3";
 
 const CurrencyConverter = () => {
@@ -63,43 +61,35 @@ const CurrencyConverter = () => {
       });
   };
 
-  useEffect(() => {
-    async function findBnBPrice() {
+  async function findBnBPrice() {
 
-      try {
-        //calling blockprice api for current BNB price
-        const response = await axios.get(`https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/binance/`);
-        const bnbPrice = response?.data;
+    try {
+      //calling blockprice api for current BNB price
+      const response = await axios.get(`https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/binance/`);
+      const bnbPrice = response?.data;
 
-        setBnbExchangeRate(bnbPrice);;
+      setBnbExchangeRate(bnbPrice);;
 
-      } catch (error) {
-        throw new Error(error);
-      }
+    } catch (error) {
+      throw new Error(error);
     }
+  }
 
-    findBnBPrice();
-  }, [])
+  async function findAvaxPrice() {
 
-  useEffect(() => {
-    async function findAvaxPrice() {
+    try {
+      //calling blockprice api for current avax price
+      const response = await axios.get(`https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/avax/`);
+      const avaxPrice = response?.data;
 
-      try {
-        //calling blockprice api for current avax price
-        const response = await axios.get(`https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/avax/`);
-        const avaxPrice = response?.data;
+      setAvaxExchangeRate(avaxPrice);
 
-        setAvaxExchangeRate(avaxPrice);
-
-      } catch (error) {
-        throw new Error(error);
-      }
+    } catch (error) {
+      throw new Error(error);
     }
+  }
 
-    findAvaxPrice();
-  }, [])
-
-  useEffect(() => {
+  const fetchCurrencyData = async () => {
     fetch("https://api.coinstats.app/public/v1/coins")
       .then((res) => res.json())
       .then((data) => {
@@ -107,14 +97,17 @@ const CurrencyConverter = () => {
         // bnb
         // const bnb = data.coins.find((coin) => coin.name === "BNB").price;
         // setBnbExchangeRate(bnb);
-
+        findBnBPrice()
         // // avax
         // const avax = data.coins.find((coin) => coin.name === "Avalanche").price;
         // setAvaxExchangeRate(avax);
+        findAvaxPrice()
 
         // matic
         const matic = data.coins.find((coin) => coin.name === "Polygon").price;
+        console.log("matic", matic);
         setMaticExchangeRate(matic);
+
 
         // fantom
         const fantom = data.coins.find((coin) => coin.name === "Fantom").price;
@@ -138,8 +131,18 @@ const CurrencyConverter = () => {
         const sol = data.coins.find((coin) => coin.name === "Solana").price;
         setSolExchangeRate(sol);
       });
-
     convert();
+  }
+
+  useEffect(() => {
+    fetchCurrencyData();
+    const interval = setInterval(() => {
+      fetchCurrencyData();
+      console.log("calling after 10s from currency converter");
+    }, 10000);
+
+    // clean up function
+    return () => clearInterval(interval);
   }, []);
 
   // console.log("avax", avaxExchangeRate);

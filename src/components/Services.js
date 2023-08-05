@@ -55,7 +55,7 @@ const marketingBearAddress = "0xd7b3398F528975CB1b966254ad16DA5E52217e7d";
 const devBearAddress = "0xc414f2d604eb7B6c5C1dA41f80Ca0d7C6fA03B6a";
 
 //instantiation of the smartchain provider used to call values from bscscan
-const provider = new ethers.providers.JsonRpcProvider(`https://bsc.getblock.io/7de140fd-2d96-4a78-9273-f0da5126ae7a/mainnet/`);
+const provider = new ethers.providers.JsonRpcProvider(`https://bsc.getblock.io/241f6740-594e-417b-acf1-d49631290a0b/mainnet/`);
 
 const ethProvider = new ethers.providers.JsonRpcProvider(`https://mainnet.infura.io/v3/f80ed0b0aaf84c7394ffc5279740c63c`);
 
@@ -250,7 +250,6 @@ const Services = ({
   const [newKxaBalance, setNewKxaBalance] = useState(0);
   const [newIbatBalance, setNewIbatBalance] = useState(0);
   const [newBearHeldByInvestors, setNewBearHeldByInvestors] = useState(0);
-  const [totalBalance, setTotalBalance] = useState(0);
 
 
   const fetchData = async () => {
@@ -258,7 +257,7 @@ const Services = ({
     bearLPTokenAmount().then((value) => setNewBearLPTokenAmount(value));
     treasuryBNB().then((value) => setNewBnbBalance(value));
     treasuryMatic().then((value) => setNewMaticBalance(value));
-    // treasuryAvax().then((value) => setNewAvaxBalance(value));
+    treasuryAvax().then((value) => setNewAvaxBalance(value));
     treasuryFtm().then((value) => setNewFtmBalance(value));
     treasuryBusd().then((value) => setNewBusdBalance(value));
     treasuryLink().then((value) => setNewLinkBalance(value));
@@ -272,8 +271,19 @@ const Services = ({
     });
     treasuryIbat().then((value) => setNewIbatBalance(value));
     bearHeldByInvestors().then((value) => setNewBearHeldByInvestors(value));
-
   }
+
+  useEffect(() => {
+    fetchData();
+    const interval = setInterval(() => {
+      fetchData();
+      console.log("calling after 10s");
+    }, 10000);
+
+    // clean up function
+    return () => clearInterval(interval);
+  }, []);
+
 
   const setTotal = () => {
     const total =
@@ -291,30 +301,8 @@ const Services = ({
       mboxExchangeRate * newMboxBalance +
       kxaExchangeRate * newKxaBalance +
       ibatExchangeRate * newIbatBalance;
-    return total;
+    return total.toFixed(2);
   };
-
-  // console.log(setTotal());
-
-  useEffect(() => {
-    setTotalBalance(setTotal())
-    fetchData();
-    const interval = setInterval(() => {
-      treasuryAvax().then((value) => {
-        console.log(value, "ava");
-        return setNewAvaxBalance(value);
-
-      });
-      fetchData();
-      setTotalBalance(setTotal())
-      console.log("calling after 10s ", setTotal());
-    }, 1000);
-
-    // clean up function
-    return () => clearInterval(interval);
-  }, []);
-
-
   const showInfo = () => {
     toast(
       "If the project hypothetically ended at this time, each investor holding 1 Million BEAR will receive this much BUSD in their wallet",
@@ -355,7 +343,7 @@ const Services = ({
               </h1>
             }
             <h1 className="text-4xl font-medium w-full text-center">
-              Total: ${totalBalance.toFixed(2)}
+              Total: ${setTotal()}
             </h1>
           </div>
           <div className="grid grid-cols-4 items-center lg:grid-cols-5 w-full mt-10 border-2 p-5 rounded-xl gap-4 text-white text-sm md:text-xl backdrop-blur-xl text-center divide-x">

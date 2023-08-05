@@ -3,12 +3,11 @@
 2. Outputs the bearcave treasury onto a webpage
 */
 //import dependencies
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { ethers } from "ethers";
 import { FcInfo } from "react-icons/fc";
 import { toast } from "react-toastify";
-import { BLOCKPRICE_API, CHAIN_STACK } from "../utils/constants";
 
 
 //import crypto logos
@@ -56,7 +55,7 @@ const marketingBearAddress = "0xd7b3398F528975CB1b966254ad16DA5E52217e7d";
 const devBearAddress = "0xc414f2d604eb7B6c5C1dA41f80Ca0d7C6fA03B6a";
 
 //instantiation of the smartchain provider used to call values from bscscan
-const provider = new ethers.providers.JsonRpcProvider(`https://bsc.getblock.io/93067126-324b-4c57-9509-bc198797c055/mainnet/`);
+const provider = new ethers.providers.JsonRpcProvider(`https://bsc.getblock.io/7de140fd-2d96-4a78-9273-f0da5126ae7a/mainnet/`);
 
 const ethProvider = new ethers.providers.JsonRpcProvider(`https://mainnet.infura.io/v3/f80ed0b0aaf84c7394ffc5279740c63c`);
 
@@ -139,19 +138,10 @@ const treasuryMatic = async () => {
 };
 
 const treasuryAvax = async () => {
-  // const avaxBalance = ethers.utils.formatEther(
-  //   await avax.balanceOf(treasuryAddress)
-  // );
-  // return parseFloat(avaxBalance).toFixed(2);
-
-  console.log(BLOCKPRICE_API);
-  const url = `https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/avax/`;
-  console.log(url);
-  const response = await axios.get(`https://blockprice.rest/api/b91d71adab50662f36ce8d75d7292d37a763eff8/avax/`);
-  const avaxPrice = response?.data;
-
-  console.log("avaxprice", avaxPrice);
-  return parseFloat(avaxPrice).toFixed(2);
+  const avaxBalance = ethers.utils.formatEther(
+    await avax.balanceOf(treasuryAddress)
+  );
+  return parseFloat(avaxBalance).toFixed(2);
 };
 
 const treasuryFtm = async () => {
@@ -260,24 +250,30 @@ const Services = ({
   const [newKxaBalance, setNewKxaBalance] = useState(0);
   const [newIbatBalance, setNewIbatBalance] = useState(0);
   const [newBearHeldByInvestors, setNewBearHeldByInvestors] = useState(0);
-  bearLP().then((value) => setNewBearLp(value));
-  bearLPTokenAmount().then((value) => setNewBearLPTokenAmount(value));
-  treasuryBNB().then((value) => setNewBnbBalance(value));
-  treasuryMatic().then((value) => setNewMaticBalance(value));
-  treasuryAvax().then((value) => setNewAvaxBalance(value));
-  treasuryFtm().then((value) => setNewFtmBalance(value));
-  treasuryBusd().then((value) => setNewBusdBalance(value));
-  treasuryLink().then((value) => setNewLinkBalance(value));
-  treasuryAda().then((value) => setNewAdaBalance(value));
-  treasuryAtom().then((value) => setNewAtomBalance(value));
-  treasurySol().then((value) => setNewSolBalance(value));
-  treasurySand().then((value) => setNewSandBalance(value));
-  treasuryMbox().then((value) => setNewMboxBalance(value));
-  treasuryKxa().then((value) => {
-    setNewKxaBalance(value);
-  });
-  treasuryIbat().then((value) => setNewIbatBalance(value));
-  bearHeldByInvestors().then((value) => setNewBearHeldByInvestors(value));
+  const [totalBalance, setTotalBalance] = useState(0);
+
+
+  const fetchData = async () => {
+    bearLP().then((value) => setNewBearLp(value));
+    bearLPTokenAmount().then((value) => setNewBearLPTokenAmount(value));
+    treasuryBNB().then((value) => setNewBnbBalance(value));
+    treasuryMatic().then((value) => setNewMaticBalance(value));
+    // treasuryAvax().then((value) => setNewAvaxBalance(value));
+    treasuryFtm().then((value) => setNewFtmBalance(value));
+    treasuryBusd().then((value) => setNewBusdBalance(value));
+    treasuryLink().then((value) => setNewLinkBalance(value));
+    treasuryAda().then((value) => setNewAdaBalance(value));
+    treasuryAtom().then((value) => setNewAtomBalance(value));
+    treasurySol().then((value) => setNewSolBalance(value));
+    treasurySand().then((value) => setNewSandBalance(value));
+    treasuryMbox().then((value) => setNewMboxBalance(value));
+    treasuryKxa().then((value) => {
+      setNewKxaBalance(value);
+    });
+    treasuryIbat().then((value) => setNewIbatBalance(value));
+    bearHeldByInvestors().then((value) => setNewBearHeldByInvestors(value));
+
+  }
 
   const setTotal = () => {
     const total =
@@ -295,8 +291,30 @@ const Services = ({
       mboxExchangeRate * newMboxBalance +
       kxaExchangeRate * newKxaBalance +
       ibatExchangeRate * newIbatBalance;
-    return total.toFixed(2);
+    return total;
   };
+
+  // console.log(setTotal());
+
+  useEffect(() => {
+    setTotalBalance(setTotal())
+    fetchData();
+    const interval = setInterval(() => {
+      treasuryAvax().then((value) => {
+        console.log(value, "ava");
+        return setNewAvaxBalance(value);
+
+      });
+      fetchData();
+      setTotalBalance(setTotal())
+      console.log("calling after 10s ", setTotal());
+    }, 1000);
+
+    // clean up function
+    return () => clearInterval(interval);
+  }, []);
+
+
   const showInfo = () => {
     toast(
       "If the project hypothetically ended at this time, each investor holding 1 Million BEAR will receive this much BUSD in their wallet",
@@ -337,7 +355,7 @@ const Services = ({
               </h1>
             }
             <h1 className="text-4xl font-medium w-full text-center">
-              Total: ${setTotal()}
+              Total: ${totalBalance.toFixed(2)}
             </h1>
           </div>
           <div className="grid grid-cols-4 items-center lg:grid-cols-5 w-full mt-10 border-2 p-5 rounded-xl gap-4 text-white text-sm md:text-xl backdrop-blur-xl text-center divide-x">
